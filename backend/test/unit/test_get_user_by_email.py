@@ -57,8 +57,9 @@ def test_getUser_nonexist_valid():
 
 
 @pytest.mark.lab1
-@pytest.mark.unit
-def test_getUser_nonexist_invalid():
+@pytest.mark.unit()
+@pytest.mark.parametrize('email',["test.com","@test.com","test@.com","test@com","test@.","test@test."])
+def test_getUser_nonexist_invalid(email):
     mockedDao = mock.MagicMock()
 
     mockedDao.find.return_value = []
@@ -66,4 +67,4 @@ def test_getUser_nonexist_invalid():
     controller = UserController(mockedDao)
 
     with pytest.raises(ValueError):
-        controller.get_user_by_email("test.com")
+        controller.get_user_by_email(email)
