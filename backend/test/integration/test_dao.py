@@ -7,7 +7,9 @@ from src.util.dao import DAO
 
 @pytest.fixture
 def user_dao():
-    yield DAO("user")
+    dao = DAO("user")
+    yield dao
+    dao.drop()
 
 
 @pytest.mark.lab1
@@ -18,6 +20,5 @@ def test_test(user_dao):
         "email": "test@test.com",
     }
     result = user_dao.create(data)
-    
 
     assert (result["firstName"] == data["firstName"] and result["email"] == data["email"])
