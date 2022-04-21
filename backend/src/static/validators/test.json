@@ -1,0 +1,23 @@
+{
+    "$jsonSchema": {
+        "bsonType": "object",
+        "required": ["required_string","required_bool"],
+        "properties": {
+            "required_string": {
+                "bsonType": "string",
+                "description": "this is a requried string"
+            },
+            "required_bool": {
+                "bsonType": "bool",
+                "description": "this is a requried boolean"
+            },
+            "items": {
+                "bsonType": "array",
+                "uniqueItems": true,
+                "items": {
+                    "bsonType": "string"
+                }
+            }
+        }
+    }
+}
