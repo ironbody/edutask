@@ -5,18 +5,12 @@
         "properties": {
             "required_string": {
                 "bsonType": "string",
-                "description": "this is a requried string"
+                "description": "this is a required string",
+                "uniqueItems": true
             },
             "required_bool": {
                 "bsonType": "bool",
-                "description": "this is a requried boolean"
-            },
-            "items": {
-                "bsonType": "array",
-                "uniqueItems": true,
-                "items": {
-                    "bsonType": "string"
-                }
+                "description": "this is a required boolean"
             }
         }
     }
