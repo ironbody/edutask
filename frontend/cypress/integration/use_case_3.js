@@ -50,8 +50,6 @@ describe("Requirements 8", () => {
         })
 
         cy.contains("Introduction to Bayesian Data Analysis").click()
-        
-        
     })
 
     after(function () {
@@ -64,12 +62,8 @@ describe("Requirements 8", () => {
         })
     })
 
-    it("Use Case 2.1", function () {
-        cy.get('.todo-list > :nth-child(1)').find(".checker").click({ force: true })
-        cy.get('.todo-list > :nth-child(1)').find(".editable").should("have.css", "text-decoration-line", "line-through")
-    })
-    it("Use Case 2.2", function () {
-        cy.get('.todo-list > :nth-child(2)').find(".checker").click({ force: true })
-        cy.get('.todo-list > :nth-child(2)').find(".editable").should("have.css", "text-decoration-line", "none")
+    it("Use Case 3.1", function () {
+        cy.get('.todo-list > :nth-child(1)').find(".remover").click()
+        cy.contains("Watch video").should("not.exist")
     })
 })

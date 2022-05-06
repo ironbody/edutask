@@ -22,13 +22,13 @@ describe("Requirements 8", () => {
                                 form: true,
                                 body: task
                             }).then((response) => {
-                                this.tid = response.body._id.$oid
+                                this.tid = response.body[0]._id.$oid
 
                                 // create new todo
                                 cy.fixture('test_todo.json')
                                     .then((todo) => {
                                         // add the task id to the data of the todo object
-                                        todo.userid = this.tid
+                                        todo.taskid = this.tid
                                         cy.request({
                                             method: 'POST',
                                             url: 'http://localhost:5000/todos/create',
@@ -41,10 +41,17 @@ describe("Requirements 8", () => {
                 })
             })
 
-            cy.fixture('test_user.json')
-            .then((user) => {
-                
-            })
+        cy.visit("http://localhost:3000/")
+
+        cy.fixture("test_user.json").then((user) => {
+
+            cy.contains("div", "Email Address").find("input").type(user.email)
+            cy.get("form").submit()
+        })
+
+        cy.contains("Introduction to Bayesian Data Analysis").click()
+
+        
     })
 
     after(function () {
@@ -57,19 +64,19 @@ describe("Requirements 8", () => {
         })
     })
 
-    it("Use Case 1.1", () => {
+    it("Use Case 1.1", function () {
         cy.get(".todo-list").find("input[type='text']").should("contain.text", "")
 
-        cy.get(".todo-list").find("input[type='submit']").click()
+        cy.get(".todo-list").find("input[type='submit']").click({ force: true })
 
         cy.get(".todo-list").find("input[type='text']").should("have.css", "border-color", "red")
     })
 
-    it("Use Case 1.2", () => {
+    it("Use Case 1.2", function () {        
         cy.get(".todo-list").find("input[type='text']").type("test", { force: true })
 
         cy.get(".todo-list").find("input[type='submit']").click({ force: true })
-
+        
         cy.get(".todo-list li.todo-item").should("contain.text", "test")
     })
 
