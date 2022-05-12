@@ -65,19 +65,22 @@ describe("Requirements 8", () => {
     })
 
     it("Use Case 1.1", function () {
-        cy.get(".todo-list").find("input[type='text']").should("contain.text", "")
+        cy.get(".todo-list").find("input[type='text']").as("text")
+        cy.get(".todo-list").find("input[type='submit']").as("button")
 
-        cy.get(".todo-list").find("input[type='submit']").click({ force: true })
+        cy.get("@text").should("contain.text", "")
 
-        cy.get(".todo-list").find("input[type='text']").should("have.css", "border-color", "red")
+        cy.get("@button").click({ force: true })
+
+        cy.get("@text").should("have.css", "border-color", "red")
     })
 
     it("Use Case 1.2", function () {        
-        cy.get(".todo-list").find("input[type='text']").type("test", { force: true })
+        cy.get(".todo-list").find("input[type='text']").type("test")
 
         cy.get(".todo-list").find("input[type='submit']").click({ force: true })
-        
-        cy.get(".todo-list li.todo-item").should("contain.text", "test")
+
+        cy.get(".todo-list > .todo-item:last > .editable").should("have.text", "test")
     })
 
 

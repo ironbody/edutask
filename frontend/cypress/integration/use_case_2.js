@@ -65,11 +65,15 @@ describe("Requirements 8", () => {
     })
 
     it("Use Case 2.1", function () {
-        cy.get('.todo-list > :nth-child(1)').find(".checker").click({ force: true })
-        cy.get('.todo-list > :nth-child(1)').find(".editable").should("have.css", "text-decoration-line", "line-through")
+        cy.get('.todo-list > :nth-child(1)').as("item")
+        cy.get("@item").find(".checker").click({ force: true })
+        cy.get("@item").find(".checker").should("have.class", "checked")
+        cy.get("@item").find(".editable").should("have.css", "text-decoration-line", "line-through")
     })
     it("Use Case 2.2", function () {
-        cy.get('.todo-list > :nth-child(2)').find(".checker").click({ force: true })
-        cy.get('.todo-list > :nth-child(2)').find(".editable").should("have.css", "text-decoration-line", "none")
+        cy.get('.todo-list > :nth-child(2)').as("item")
+        cy.get('@item').find(".checker").click({ force: true })
+        cy.get('@item').find(".checker").should("have.class", "unchecked")
+        cy.get('@item').find(".editable").should("have.css", "text-decoration-line", "none")
     })
 })
