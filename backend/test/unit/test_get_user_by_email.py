@@ -6,7 +6,7 @@ from src.controllers.usercontroller import UserController
 
 @pytest.mark.lab1
 @pytest.mark.unit
-def test_getUser_one_exist_valid():
+def test_case_1():
     mockedDao = mock.MagicMock()
 
     mockedDao.find.return_value = [{'email': "test@test.com",
@@ -23,7 +23,7 @@ def test_getUser_one_exist_valid():
 
 @pytest.mark.lab1
 @pytest.mark.unit
-def test_getUser_two_exist_valid():
+def test_case_2():
     mockedDao = mock.MagicMock()
 
     mockedDao.find.return_value = [{'email': "test@test.com",
@@ -44,7 +44,7 @@ def test_getUser_two_exist_valid():
 
 @pytest.mark.lab1
 @pytest.mark.unit
-def test_getUser_nonexist_valid():
+def test_case_3():
     mockedDao = mock.MagicMock()
 
     mockedDao.find.return_value = []
@@ -58,11 +58,37 @@ def test_getUser_nonexist_valid():
 
 @pytest.mark.lab1
 @pytest.mark.unit()
-@pytest.mark.parametrize('email',["test.com","@test.com","test@.com","test@com","test@.","test@test."])
-def test_getUser_nonexist_invalid(email):
+@pytest.mark.parametrize('email',["test.com"])
+def test_case_4(email):
     mockedDao = mock.MagicMock()
 
     mockedDao.find.return_value = []
+
+    controller = UserController(mockedDao)
+
+    with pytest.raises(ValueError):
+        controller.get_user_by_email(email)
+
+@pytest.mark.lab1
+@pytest.mark.unit()
+@pytest.mark.parametrize('email',["test@test.com"])
+def test_case_5_to_7(email):
+    mockedDao = mock.MagicMock()
+
+    mockedDao.find.return_value = Exception
+
+    controller = UserController(mockedDao)
+
+    with pytest.raises(Exception):
+        controller.get_user_by_email(email)
+
+@pytest.mark.lab1
+@pytest.mark.unit()
+@pytest.mark.parametrize('email',["test.com"])
+def test_case_5_to_7(email):
+    mockedDao = mock.MagicMock()
+
+    mockedDao.find.return_value = Exception
 
     controller = UserController(mockedDao)
 
